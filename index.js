@@ -27,22 +27,25 @@ app.get("/records", async (req, res) => {
 app.get("/record/:name", async (req, res) => {
   let name = req.params.name;
   const results = await db
-    .matchNode("line", "Line")
-    .where({ "line.name": name })
-    .return("line")
-    .run();
+	.matchNode("line", "Line")
+	.where({ "line.name": name })
+	.return("line")
+	.run();
 
   let record = results.map((row) => row.line.properties.name);
   res.send(record);
 });
 
 app.post("/create", async (req, res) => {
-  let formName = req.body.name;
-  const results = await db
-    .create(cypher.node("line", "Line", { name: formName }))
-    .return("line")
-    .run();
-  res.send(results.map((row) => row.line.properties.name));
+
+	let formType = req.body.type;	
+	let formName = req.body.name;
+	const results = await db
+	.create(cypher.node("node", formType, { name: formName }))
+	.return("node")
+	.run();
+	console.log(formType); 
+  	res.send(results.map((row) => row.node.properties.name));
 });
 
 // try {
