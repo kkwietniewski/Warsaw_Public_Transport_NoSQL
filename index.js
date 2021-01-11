@@ -1,6 +1,8 @@
 const { runServer, app } = require("./server");
+const fs = require('fs'); 
 const cypher = require("cypher-query-builder");
 const neo4j = require("neo4j-driver");
+const { text } = require("body-parser");
 const driver = neo4j.driver(
   "bolt://localhost",
   neo4j.auth.basic("neo4j", "123")
@@ -12,9 +14,11 @@ let db = new cypher.Connection("bolt://localhost", {
 });
 runServer(3000);
 
+
 app.get("/", (req, res) => {
   res.send("Hello public transport!");
 });
+
 
 app.get("/records", async (req, res) => {
   let records = [];
@@ -23,6 +27,7 @@ app.get("/records", async (req, res) => {
   records = results.map((row) => row.n.properties.name);
   res.send(records);
 });
+
 
 app.get("/record/:name", async (req, res) => {
   let name = req.params.name;
@@ -36,6 +41,7 @@ app.get("/record/:name", async (req, res) => {
   res.send(record);
 });
 
+
 app.post("/create", async (req, res) => {
   let formType = req.body.type;
   let formName = req.body.name;
@@ -47,6 +53,7 @@ app.post("/create", async (req, res) => {
   res.send(results.map((row) => row.node.properties.name));
 });
 
+
 app.post("/delete", async (req, res) => {
   let formType = req.body.type;
   let formName = req.body.name;
@@ -55,9 +62,42 @@ app.post("/delete", async (req, res) => {
     .delete("node")
     .return("node")
     .run();
-  console.log(formType);
-  res.send(`Usunięto ${formType}`);
+  res.send(`Usunięto ${formType} ${formName}`);
 });
+
+
+app.get("/flushdata", async (req, res) => {
+	const results = await db
+	.matchNode('n')
+	.detachDelete('n')
+	.run();
+	res.send('Database delated');
+})
+
+
+app.get("/createdatabase", async(req, res) => {
+	
+	let query=[];
+	let tmp="";
+	let queryNo = 0;
+	let text; 
+	fs.readFile('./database.txt', async (err,data) => {
+		if (err) throw err;
+		text = data.toString();
+		text = text.split(";");
+		try {
+			const result = await session.run(text[0])
+		}
+		finally {
+			await session.close()
+		}
+		await driver.close()
+		
+	});
+
+	res.send('Database created');
+	});
+
 
 // try {
 //     const result = await session.run("MATCH (n) return n");
