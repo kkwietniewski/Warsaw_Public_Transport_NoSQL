@@ -3,11 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Create</title>
+    <title>Find_Relation</title>
   </head>
   <body>
-    <form action="http://localhost:3000/create" method="POST">
-      <label>Co chcesz dodać?</label>
+    <form action="http://localhost:3000/relation" method="POST">
+      <label>Co chcesz znaleźć?</label>
       <select name="type">
         <option value="MetroStation">Metro</option>
         <option value="TramStation">Tram</option>
@@ -17,6 +17,8 @@
       </select>
       <label>Name</label>
       <input type="text" name="name" />
+      <label>Number of relation</label>
+      <input type="text" name="number" />
       <button type="submit">Wyślij</button>
     </form>
   </body>
