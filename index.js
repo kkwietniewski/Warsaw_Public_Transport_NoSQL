@@ -27,25 +27,36 @@ app.get("/records", async (req, res) => {
 app.get("/record/:name", async (req, res) => {
   let name = req.params.name;
   const results = await db
-	.matchNode("line", "Line")
-	.where({ "line.name": name })
-	.return("line")
-	.run();
+    .matchNode("line", "Line")
+    .where({ "line.name": name })
+    .return("line")
+    .run();
 
   let record = results.map((row) => row.line.properties.name);
   res.send(record);
 });
 
 app.post("/create", async (req, res) => {
+  let formType = req.body.type;
+  let formName = req.body.name;
+  const results = await db
+    .create(cypher.node("node", formType, { name: formName }))
+    .return("node")
+    .run();
+  console.log(formType);
+  res.send(results.map((row) => row.node.properties.name));
+});
 
-	let formType = req.body.type;	
-	let formName = req.body.name;
-	const results = await db
-	.create(cypher.node("node", formType, { name: formName }))
-	.return("node")
-	.run();
-	console.log(formType); 
-  	res.send(results.map((row) => row.node.properties.name));
+app.post("/delete", async (req, res) => {
+  let formType = req.body.type;
+  let formName = req.body.name;
+  const results = await db
+    .matchNode("node", formType, { name: formName })
+    .delete("node")
+    .return("node")
+    .run();
+  console.log(formType);
+  res.send(`Usunięto ${formType}`);
 });
 
 // try {
