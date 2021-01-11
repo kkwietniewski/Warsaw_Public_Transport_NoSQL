@@ -75,28 +75,33 @@ app.get("/flushdata", async (req, res) => {
 })
 
 
-app.get("/createdatabase", async(req, res) => {
+// app.get("/createdatabase", async(req, res) => {
 	
-	let query=[];
-	let tmp="";
-	let queryNo = 0;
-	let text; 
-	fs.readFile('./database.txt', async (err,data) => {
-		if (err) throw err;
-		text = data.toString();
-		text = text.split(";");
-		try {
-			const result = await session.run(text[0])
-		}
-		finally {
-			await session.close()
-		}
-		await driver.close()
-		
-	});
+// 	let queries=[];
+// 	let tmp="";
+// 	let queryNo = 0;
+// 	let text; 
+// 	fs.readFile('./database.txt', async (err,data) => {
+// 		if (err) throw err;
+// 		text = data.toString();
+// 		text = text.split(";");
 
-	res.send('Database created');
-	});
+// 		text.forEach(function(query) {
+// 			queries.push(session.run(query))
+// 		})
+
+// 		console.log(queries); 
+// 		// Promise.all(queries).then(function(results) {
+// 		// 	results.forEach(function (result) {
+// 		// 		console.log(result)
+// 		// 	})
+// 		// 	session.close()
+// 		// 	driver.close()
+// 		// })
+
+// 	res.send('Database created');
+// 	});
+// });
 
 
 // try {

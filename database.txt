@@ -7,8 +7,6 @@ CREATE
 (R1:Line {name: 'R1', line_type:'metropolitan'}),
 (T35:Line {name:'T35'}),
 (T14:Line {name: 'T14'}),
-
-//M1 - stacje
 (Stoklosy:MetroStation {name:'Stoklosy', zone: 1}),
 (Ursynow:MetroStation {name:'Ursynow', zone: 1}),
 (Imielin:MetroStation {name:'Imielin', zone: 1}),
@@ -30,8 +28,6 @@ CREATE
 (Stare_Bielany:MetroStation {name:'Stare_Bielany', zone: 1}),
 (Wawrzyszew:MetroStation {name:'Wawrzyszew', zone: 1}),
 (Mlociny:MetroStation {name:'Mlociny', zone: 1}),
-
-//M2 - stacje
 (Trocka:MetroStation {name:'Trocka', zone: 1}),
 (Tragowek_Mieszkaniowy:MetroStation {name:'Tragowek_Mieszkaniowy', zone: 1}),
 (Szwedzka:MetroStation {name:'Szwedzka', zone: 1}),
@@ -44,8 +40,6 @@ CREATE
 (Plocka:MetroStation {name:'Plocka', zone: 1}),
 (Mlynow:MetroStation {name:'Mlynow', zone: 1}),
 (Ksiecia_Janusza:MetroStation {name:'Ksiecia_Janusza', zone: 1}),
-
-//B102 - stacje
 (PKP_Olszynka_Grochowska:BusStation {name:'PKP_Olszynka_Grochowska', zone: 1}),
 (Chlopnickiego:BusStation {name:'Chlopnickiego', zone: 1}),
 (Osiedle_Mlodych:BusStation {name:'Osiedle_Mlodych', zone: 1}),
@@ -63,8 +57,6 @@ CREATE
 (Topiel:BusStation {name:'Topiel', zone: 1}),
 (Nowy_Swiat:BusStation {name:'Nowy_Swiat', zone: 1}),
 (Emilli_Plater:BusStation {name:'Emilli_Plater', zone: 1}),
-
-//B500 - stacje
 (Rondo_Radoslawa:BusStation:TramStation {name:'Rondo_Radoslawa', zone: 1}),
 (Baseny_Inflancka:BusStation {name:'Baseny_Inflancka', zone: 1}),
 (Rondo_Starzynskiego:BusStation {name:'Rondo_Starzynskiego', zone: 1}),
@@ -77,8 +69,6 @@ CREATE
 (Szpital_Brodnowski:BusStation {name:'Szpital_Brodnowski', zone: 1}),
 (Lojewska:BusStation {name:'Lojewska', zone: 1}),
 (Brodno_Podgrodzie:BusStation {name:'Brodno_Podgrodzie', zone: 1}),
-
-//BE_1 - stacje
 (Kryniczna:BusStation {name:'Kryniczna', zone: 1}),
 (Saska:BusStation {name:'Saska', zone: 1}),
 (Afrykanska:BusStation {name:'Afrykanska', zone: 1}),
@@ -87,8 +77,6 @@ CREATE
 (Bora_Komorowskiego:BusStation {name:'Bora_Komorowskiego', zone: 1}),
 (Horbaczewskiego:BusStation {name:'Horbaczewskiego', zone: 1}),
 (Goclaw:BusStation {name:'Goclaw', zone: 1}),
-
-//R1 - stacje
 (Wschodnia:TrainStation {name:'Warszawa_Wschodnia', zone: 1}),
 (Powisle:TrainStation {name:'Powisle', zone: 1}),
 (Srodmiescie:TrainStation {name:'Srodmiescie', zone: 1}),
@@ -99,8 +87,6 @@ CREATE
 (Ursus_Niedzwiadek:TrainStation {name:'Ursus_Niedzwiadek', zone: 2}),
 (Piastow:TrainStation {name:'Piastow', zone: 2}),
 (Pruszkow:TrainStation {name:'Pruszkow', zone: 2}),
-
-//Tramwaje – stacje
 (Wyscigi:TramStation {name:'Wyscigi', zone: 1}),
 (al_Lotnikow:TramStation {name:'Ursynow', zone: 1}),
 (Niedzwiedzia:TramStation {name:'Niedzwiedzia', zone: 1}),
@@ -140,8 +126,6 @@ CREATE
 (Och_Teatr:TramStation {name: 'Och_Teatr', zone:1}),
 (Bitwy_Warszawskiej_1920:TramStation {name: 'Bitwy_Warszawskiej_1920', zone:1}),
 (Banacha:TramStation {name: 'Banacha', zone:1}),
-
-//Tramwaje - relacje
 (Wilanowska)-[:part_of{stop_id: 1, time: 0, ultimate_stop:'true', request_stop:'false'}]->(T14),
 (Bukowinska)-[:part_of{stop_id: 2, time: 2, ultimate_stop:'false', request_stop:'false'}]->(T14),
 (Krolikarnia)-[:part_of{stop_id: 3, time: 2, ultimate_stop:'false', request_stop:'false'}]->(T14),
@@ -162,7 +146,6 @@ CREATE
 (Och_Teatr)-[:part_of{stop_id: 18, time: 1, ultimate_stop:'false', request_stop:'false'}]->(T14),
 (Bitwy_Warszawskiej_1920)-[:part_of{stop_id: 19, time: 2, ultimate_stop:'false', request_stop:'false'}]->(T14),
 (Banacha)-[:part_of{stop_id: 20, time: 2, ultimate_stop:'true', request_stop:'false'}]->(T14),
-
 (Nowe_Bemowo)-[:part_of{stop_id: 35, time: 1, ultimate_stop:'true', request_stop:'false'}]->(T35),
 (Piastow_Slaskich)-[:part_of{stop_id: 34, time: 2, ultimate_stop: 'false', request_stop:'false'}]->(T35),
 (Ogrody_Dzialkowe_Bemowo)-[:part_of{stop_id: 33, time: 2, ultimate_stop: 'false', request_stop:'false'}]->(T35),
@@ -198,8 +181,6 @@ CREATE
 (Niedzwiedzia)-[:part_of{stop_id: 3, time: 1, ultimate_stop:'false', request_stop:'false'}]->(T35),
 (al_Lotnikow)-[:part_of{stop_id: 2, time: 2, ultimate_stop:'false', request_stop:'false'}]->(T35),
 (Wyscigi)-[:part_of{stop_id: 1, time: 0, ultimate_stop:'true', request_stop:'false'}]->(T35),
-
-//M1 - relacje
 (Mlociny)-[:part_of{stop_id:1, time: 0, ultimate_stop:'true', request_stop:'false'}]->(M1),
 (Wawrzyszew)-[:part_of{stop_id:2, time: 2, ultimate_stop:'false', request_stop:'false'}]->(M1),
 (Stare_Bielany)-[:part_of{stop_id:3, time: 2, ultimate_stop:'false', request_stop:'false'}]->(M1),
@@ -223,8 +204,6 @@ CREATE
 (Imielin)-[:part_of{stop_id:19, time: 2, ultimate_stop:'false', request_stop:'false'}]->(M1),
 (Natolin)-[:part_of{stop_id:20, time: 2, ultimate_stop:'false', request_stop:'false'}]->(M1),
 (Kabaty)-[:part_of{stop_id:21, time: 2, ultimate_stop:'true', request_stop:'false'}]->(M1),
-
-//M2 - relacje
 (Trocka)-[:part_of{stop_id:1, time: 0, ultimate_stop:'true', request_stop:'false'}]->(M2),
 (Tragowek_Mieszkaniowy)-[:part_of{stop_id:2, time: 2, ultimate_stop:'false', request_stop:'false'}]->(M2),
 (Szwedzka)-[:part_of{stop_id:3, time: 2, ultimate_stop:'false', request_stop:'false'}]->(M2),
@@ -240,8 +219,6 @@ CREATE
 (Plocka)-[:part_of{stop_id:11, time: 2, ultimate_stop:'false', request_stop:'false'}]->(M2),
 (Mlynow)-[:part_of{stop_id:12, time: 2, ultimate_stop:'false', request_stop:'false'}]->(M2),
 (Ksiecia_Janusza)-[:part_of{stop_id:13, time: 2, ultimate_stop:'true', request_stop:'false'}]->(M2),
-
-//B102 - relacje
 (PKP_Olszynka_Grochowska)-[:part_of{stop_id:1, time: 0, ultimate_stop:'true', request_stop:'false'}]->(B102),
 (Chlopnickiego)-[:part_of{stop_id:2, time: 1, ultimate_stop:'false', request_stop:'false'}]->(B102),
 (Osiedle_Mlodych)-[:part_of{stop_id:3, time: 1, ultimate_stop:'false', request_stop:'false'}]->(B102),
@@ -259,8 +236,6 @@ CREATE
 (Topiel)-[:part_of{stop_id:17, time: 1, ultimate_stop:'false', request_stop:'false'}]->(B102),
 (Nowy_Swiat)-[:part_of{stop_id:18, time: 2, ultimate_stop:'false', request_stop:'false'}]->(B102),
 (Emilli_Plater)-[:part_of{stop_id:19, time: 1, ultimate_stop:'true', request_stop:'false'}]->(B102),
-
-//B500 - relacje
 (Rondo_Radoslawa)-[:part_of{stop_id:1, time: 0, ultimate_stop:'true', request_stop:'false'}]->(B500),
 (Baseny_Inflancka)-[:part_of{stop_id:2, time: 2, ultimate_stop:'false', request_stop:'false'}]->(B500),
 (Rondo_Starzynskiego)-[:part_of{stop_id:4, time: 1, ultimate_stop:'false', request_stop:'false'}]->(B500),
@@ -273,8 +248,6 @@ CREATE
 (Szpital_Brodnowski)-[:part_of{stop_id:11, time: 1, ultimate_stop:'false', request_stop:'false'}]->(B500),
 (Lojewska)-[:part_of{stop_id:12, time: 1, ultimate_stop:'false', request_stop:'false'}]->(B500),
 (Brodno_Podgrodzie)-[:part_of{stop_id:13, time: 1, ultimate_stop:'true', request_stop:'false'}]->(B500),
-
-//BE_1 - relacje
 (Kryniczna)-[:part_of{stop_id:2, time: 4, ultimate_stop:'true', request_stop:'true'}]->(BE_1),
 (Saska)-[:part_of{stop_id:3, time: 2, ultimate_stop:'false', request_stop:'false'}]->(BE_1),
 (Afrykanska)-[:part_of{stop_id:4, time: 2, ultimate_stop:'false', request_stop:'false'}]->(BE_1),
@@ -283,8 +256,6 @@ CREATE
 (Bora_Komorowskiego)-[:part_of{stop_id:7, time: 2, ultimate_stop:'false', request_stop:'false'}]->(BE_1),
 (Horbaczewskiego)-[:part_of{stop_id:8, time: 1, ultimate_stop:'false', request_stop:'false'}]->(BE_1),
 (Goclaw)-[:part_of{stop_id:9, time: 1, ultimate_stop:'true', request_stop:'false'}]->(BE_1),
-
-//R1 - relacje
 (Wschodnia)-[:part_of{stop_id: 1, time: 0, ultimate_stop:'true', request_stop:'false'}]->(R1),
 (Stadion_Narodowy)-[:part_of{stop_id: 2, time: 2, ultimate_stop:'false', request_stop:'false'}]->(R1),
 (Powisle)-[:part_of{stop_id: 3, time: 3, ultimate_stop:'false', request_stop:'false'}]->(R1),
@@ -296,18 +267,12 @@ CREATE
 (Ursus_Niedzwiadek)-[:part_of{stop_id: 9, time: 2, ultimate_stop:'false', request_stop:'false'}]->(R1),
 (Piastow)-[:part_of{stop_id: 10, time: 3, ultimate_stop:'false', request_stop:'false'}]->(R1),
 (Pruszkow)-[:part_of{stop_id: 11, time: 2, ultimate_stop:'true', request_stop:'false'}]->(R1),
-
-//WKD - linia
 (WKD:Line {name: 'WKD', line_type:'approach'}),
-
-//WKD - stacje
 (Reduta_Ordona:TrainStation {name:' Reduta_Ordona ', zone: 1}),
 (Aleje_Jerozolimskie:TrainStation {name:'Aleje_Jerozolimskie', zone: 1}),
 (Rakow:TrainStation {name:'Rakow', zone: 1}),
 (Salomea:TrainStation {name:'Salomea', zone: 1}),
 (Opacz:TrainStation {name:'Opacz', zone: 2}),
-
-//WKD – relacje
 (Srodmiescie)-[:part_of{stop_id: 1, time: 0, ultimate_stop:'true', request_stop:'false'}]->(WKD),
 (Ochota)-[:part_of{stop_id: 2, time: 2, ultimate_stop:'false', request_stop:'false'}]->(WKD),
 (Zachodnia)-[:part_of{stop_id: 3, time: 3, ultimate_stop: 'false', request_stop:'false'}]->(WKD),
@@ -316,35 +281,22 @@ CREATE
 (Rakow)-[:part_of{stop_id: 6, time: 3, ultimate_stop: 'false', request_stop:'false'}]->(WKD),
 (Salomea)-[:part_of{stop_id: 7, time: 2, ultimate_stop: 'false', request_stop:'false'}]->(WKD),
 (Opacz)-[:part_of{stop_id: 8, time: 2, ultimate_stop:'true', request_stop:'false'}]->(WKD);
-
-//tworzenie dworców autobusowych
 match (n:MetroStation)
 where n.name in ['Stadion_Narodowy','Centrum_Nauki_Kopernik', 'Swietokrzyska']
 set n :BusTerminal;
-
-//tworzenie dworca metra
 match (n:MetroStation)
 where n.name in ['Swietokrzyska', 'Centrum_Nauki_Kopernik', 'Stadion_Narodowy', 'Wilanowska']
 set n :MetroTerminal;
-
-//tworzenie dworca tramwaji
 match (n:MetroStation )
 where n.name in ['Swietokrzyska', 'Wilanowska']
 set n:TramTermial;
-
-//tworzenie dworca pociągów
 match (n:MetroStation {name:'Stadion_Narodowy'})
 set n:TrainTermial;
-
-//przystanki z przesiadką
 match (n) 
 WITH  n, labels(n) as lbl, count(labels(n)) as ile where lbl[1] is not null 
 set n.changeTransport = "true" 
 return n;
-//ZTM
 CREATE (ZTM:Management {name: "ZTM"}); 
 MATCH (a:Management), (b:Line) 
 CREATE (a)-[r:manage]->(b) return a,b;
-
-//Zmiana relacji między węzłami łączącymi linie
 match (n)-[r:part_of]->(b:Line) WITH  n,b,r, labels(n) as lbl, count(labels(n)) as ile where lbl[1] is not null merge (n)-[:connect{stop_id: r.stop_id, time:r.time, ultimate_stop: r.ultimate_stop, request_stop: r.request_stop }]->(b) delete r return n,b;
