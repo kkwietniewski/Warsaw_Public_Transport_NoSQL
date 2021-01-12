@@ -8,7 +8,6 @@ const driver = neo4j.driver(
   "bolt://localhost",
   neo4j.auth.basic("neo4j", "123")
 );
-const session = driver.session();
 let db = new cypher.Connection("bolt://localhost", {
   username: "neo4j",
   password: "123",
@@ -67,21 +66,25 @@ app.get("/flushdata", async (req, res) => {
 });
 
 app.post("/relation", async (req, res) => {
-  const tx = session.beginTransaction();
+  const session = driver.session();
   let formType = req.body.type;
   let formName = req.body.name;
   let formNumber = req.body.number;
-  let path = [];
-  tx.run(
-    `match p = (n:${formType} {name:"${formName}"})-[*${formNumber}]-(m) return p`
-  )
+  const query = `match p = (n:${formType} {name:"${formName}"})-[r*${formNumber}]-(m) return p`;
+
+  session
+    .run(query)
     .then((result) => {
-      console.log(result.records.length);
-      return result.records.map((record) => {
-        res.send(record.get(0));
-      });
+      const results = result.records.map((record) => record.get(0));
+
+      res.send(results);
     })
-    .then(() => session.close());
+    .catch((e) => {
+      res.status(500).send(e);
+    })
+    .then(() => {
+      return session.close();
+    });
 });
 // app.get("/createdatabase", async(req, res) => {
 
