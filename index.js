@@ -6,7 +6,7 @@ const { text } = require("body-parser");
 const { node, relation } = require("cypher-query-builder");
 const driver = neo4j.driver(
   "bolt://localhost",
-  neo4j.auth.basic("neo4j", "123")
+  neo4j.auth.basic("neo4j", "123"), {disableLosslessIntegers: true}
 );
 let db = new cypher.Connection("bolt://localhost", {
   username: "neo4j",
@@ -14,28 +14,54 @@ let db = new cypher.Connection("bolt://localhost", {
 });
 runServer(3000);
 
+
 app.get("/", (req, res) => {
   res.send("Hello public transport!");
 });
 
-app.get("/records", async (req, res) => {
-  let records = [];
-  const results = await db.matchNode("n").return("n").run();
 
-  records = results.map((row) => row.n.properties.name);
-  res.send(records);
+app.get("/records", async (req, res) => {
+  const session = driver.session();
+  let records = [];
+  try {
+   const results = await db.matchNode("n")
+   .return("n")
+   .run();
+    records = results.map((row) => row.n.properties.name);
+  }
+  catch (e)
+  {
+    res.status(500); 
+    res.send('Blad!'); 
+  }
+  finally {
+    res.send(records);
+    await session.close()
+  }
+  
 });
 
+
 app.get("/record/:name", async (req, res) => {
+  const session = driver.session();
+  let record;
   let name = req.params.name;
-  const results = await db
+  try {
+    const results = await db
     .matchNode("line", "Line")
     .where({ "line.name": name })
     .return("line")
     .run();
-
-  let record = results.map((row) => row.line.properties.name);
-  res.send(record);
+    record = results.map((row) => row.line.properties.name);
+  }
+  catch (e) {
+    res.status(500); 
+    res.send("Błąd!"); 
+  }
+  finally {
+    res.send(record);
+    await session.close(); 
+  }
 });
 
 app.post("/create", async (req, res) => {
@@ -85,7 +111,9 @@ app.post("/relation", async (req, res) => {
     .then(() => {
       return session.close();
     });
-});
+
+
+ });
 // app.get("/createdatabase", async(req, res) => {
 
 // 	let queries=[];
