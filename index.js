@@ -6,7 +6,8 @@ const { text } = require("body-parser");
 const { node, relation } = require("cypher-query-builder");
 const driver = neo4j.driver(
   "bolt://localhost",
-  neo4j.auth.basic("neo4j", "123"), {disableLosslessIntegers: true}
+  neo4j.auth.basic("neo4j", "123"),
+  { disableLosslessIntegers: true }
 );
 let db = new cypher.Connection("bolt://localhost", {
   username: "neo4j",
@@ -14,53 +15,42 @@ let db = new cypher.Connection("bolt://localhost", {
 });
 runServer(3000);
 
-
 app.get("/", (req, res) => {
   res.send("Hello public transport!");
 });
-
 
 app.get("/records", async (req, res) => {
   const session = driver.session();
   let records = [];
   try {
-   const results = await db.matchNode("n")
-   .return("n")
-   .run();
+    const results = await db.matchNode("n").return("n").run();
     records = results.map((row) => row.n.properties.name);
-  }
-  catch (e)
-  {
-    res.status(500); 
-    res.send('Blad!'); 
-  }
-  finally {
+  } catch (e) {
+    res.status(500);
+    res.send("Blad!");
+  } finally {
     res.send(records);
-    await session.close()
+    await session.close();
   }
-  
 });
 
-
-app.get("/record/:name", async (req, res) => {
+app.get("/record/:name", async (req, res, next) => {
   const session = driver.session();
   let record;
   let name = req.params.name;
   try {
     const results = await db
-    .matchNode("line", "Line")
-    .where({ "line.name": name })
-    .return("line")
-    .run();
-    record = results.map((row) => row.line.properties.name);
-  }
-  catch (e) {
-    res.status(500); 
-    res.send("Błąd!"); 
-  }
-  finally {
+      .matchNode("node")
+      .where({"node.name": name})
+      .return("node")
+      .run();
+    record = results.map((row) => row.node);
+  } catch (e) {
+    res.status(500);
+    res.send("Błąd!");
+  } finally {
     res.send(record);
-    await session.close(); 
+    await session.close();
   }
 });
 
@@ -91,7 +81,7 @@ app.get("/flushdata", async (req, res) => {
   res.send("Database delated");
 });
 
-app.post("/relation", async (req, res) => {
+app.post("/numberofrelations", async (req, res) => {
   const session = driver.session();
   let formType = req.body.type;
   let formName = req.body.name;
@@ -111,9 +101,30 @@ app.post("/relation", async (req, res) => {
     .then(() => {
       return session.close();
     });
+});
+
+app.post("/findrelation", async (req, res) => {
+  const session = driver.session();
+  let formName1 = req.body.name1;
+  let formName2 = req.body.name2;
+  const query = `match (from {name:"${formName1}"}), (to {name: "${formName2}"}) call apoc.algo.dijkstra(from, to, '', '') yield path as path return path`;
+
+  session
+    .run(query)
+    .then((result) => {
+      const results = result.records.map((record) => record.get(0));
+
+      res.send(results);
+    })
+    .catch((e) => {
+      res.status(500).send(e);
+    })
+    .then(() => {
+      return session.close();
+    });
+});
 
 
- });
 // app.get("/createdatabase", async(req, res) => {
 
 // 	let queries=[];
