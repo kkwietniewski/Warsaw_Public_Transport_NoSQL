@@ -65,7 +65,7 @@ app.post("/create", async (req, res) => {
     .return("node")
     .run();
   records = results.map((row) => row.node)
-  res.render("results.html", {records: records, message: "You created: "});
+  res.render("addresults.html", {records: records, message: "You created: "});
 });
 
 app.get("/delete", (req, res)=>{
@@ -80,27 +80,36 @@ app.post("/delete", async (req, res) => {
     .return("node")
     .run();
   records = results.map((row) => row.node)
-  res.render("results.html", {records: records, message: "You deleted: "});
+  console.log(records);
+  res.render("deleteresults.html", {records: records, message: "You deleted: ", name: formName});
 });
 
-app.get("/flushdata", async (req, res) => {
+app.get("/flushdata", (req,res)=>{
+  res.render("flushdatabase.html");
+});
+
+app.post("/flushdata", async (req, res) => {
   const results = await db.matchNode("n").detachDelete("n").run();
-  res.send("Database delated");
+  res.render("flushdatabaseresult.html", {message: "Database flushed!"})
+});
+
+app.get("/numberofrelations", (req,res)=>{
+  res.render("numberofrelations.html");
 });
 
 app.post("/numberofrelations", async (req, res) => {
   const session = driver.session();
-  let formType = req.body.type;
   let formName = req.body.name;
   let formNumber = req.body.number;
-  const query = `match p = (n:${formType} {name:"${formName}"})-[r*${formNumber}]-(m) return p`;
+  const query = `match p = (n {name:"${formName}"})-[r*${formNumber}]-(m) return p`;
 
   session
     .run(query)
     .then((result) => {
       const results = result.records.map((record) => record.get(0));
 
-      res.send(results);
+      console.log(results);
+      res.render("numberofrelationsresult.html", {result: results});
     })
     .catch((e) => {
       res.status(500).send(e);
