@@ -41,8 +41,8 @@
         </div>
       </div>
     </nav>
-    <div class="container-fluid">
-      <table class="table">
+    <div class="container">
+      <table class="table table-hover table-bordered table-light m-4">
         <thead>
         <tr>
           <th scope="col"></th>
@@ -56,9 +56,10 @@
           <tr>
             <th scope="row"><%= index %></th>
             <td><%= record.identity%></td>
-            <td><%= record.labels%></td>
-            <td><%= record.properties.name%></td><% }); %>
+            <td><%= record.properties.name%></td>
+            <td><%= record.labels%></td> <% }); %>
           </tr>
+          
         </tbody>
       </table>
     </div>
