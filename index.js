@@ -53,27 +53,34 @@ app.get("/record/:name", async (req, res, next) => {
     await session.close();
   }
 });
-
+app.get("/create", (req, res)=>{
+  res.render("createnode.html");
+});
 app.post("/create", async (req, res) => {
   let formType = req.body.type;
   let formName = req.body.name;
+  let records = [];
   const results = await db
     .create(cypher.node("node", formType, { name: formName }))
     .return("node")
     .run();
-  console.log(formType);
-  res.send(results.map((row) => row.node.properties.name));
+  records = results.map((row) => row.node)
+  res.render("results.html", {records: records, message: "You created: "});
+});
+
+app.get("/delete", (req, res)=>{
+  res.render("deletenode.html");
 });
 
 app.post("/delete", async (req, res) => {
-  let formType = req.body.type;
   let formName = req.body.name;
   const results = await db
-    .matchNode("node", formType, { name: formName })
+    .matchNode("node", { name: formName })
     .delete("node")
     .return("node")
     .run();
-  res.send(`Usunięto ${formType} ${formName}`);
+  records = results.map((row) => row.node)
+  res.render("results.html", {records: records, message: "You deleted: "});
 });
 
 app.get("/flushdata", async (req, res) => {

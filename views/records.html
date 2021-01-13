@@ -23,10 +23,10 @@
               <a class="nav-link" aria-current="page" href="#">Record</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" aria-current="page" href="#">Create</a>
+              <a class="nav-link" aria-current="page" href="/create">Create</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" aria-current="page" href="#">Delete</a>
+              <a class="nav-link" aria-current="page" href="/delete">Delete</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" aria-current="page" href="#">Flushdata</a>
@@ -57,7 +57,7 @@
             <th scope="row"><%= index %></th>
             <td><%= record.identity%></td>
             <td><%= record.labels%></td>
-            <td><%= record.properties.name%><% }); %></td>
+            <td><%= record.properties.name%></td><% }); %>
           </tr>
         </tbody>
       </table>

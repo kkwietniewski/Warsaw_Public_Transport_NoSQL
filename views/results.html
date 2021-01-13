@@ -41,19 +41,11 @@
         </div>
       </div>
     </nav>
-    <form action="/create" method="POST">
-      <label>Co chcesz dodać?</label>
-      <select name="type">
-        <option value="MetroStation">Metro</option>
-        <option value="TramStation">Tram</option>
-        <option value="BusStation">Bus</option>
-        <option value="TrainStation">Train</option>
-        <option value="Line">Line</option>
-      </select>
-      <label>Name</label>
-      <input type="text" name="name" />
-      <button type="submit">Wyślij</button>
-    </form>
+    <h1><%= message %></h1>
+    <% records.forEach(record => {%>
+      <p>Identity: <%= record.identity %></p>
+      <p>Label: <%= record.labels %></p>
+      <p>Name: <%= record.properties.name %></p><% }); %>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
   </body>
 </html>
