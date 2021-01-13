@@ -16,7 +16,7 @@ let db = new cypher.Connection("bolt://localhost", {
 runServer(3000);
 
 app.get("/", (req, res) => {
-  res.send("Hello public transport!");
+  res.render("index.html", {title: "Homepage", message: "Choose endpoint"});
 });
 
 app.get("/records", async (req, res) => {
@@ -24,12 +24,12 @@ app.get("/records", async (req, res) => {
   let records = [];
   try {
     const results = await db.matchNode("n").return("n").run();
-    records = results.map((row) => row.n.properties.name);
+    records = results.map((row) => row.n);
   } catch (e) {
     res.status(500);
     res.send("Blad!");
   } finally {
-    res.send(records);
+    res.render("records.html", {records: records});
     await session.close();
   }
 });
