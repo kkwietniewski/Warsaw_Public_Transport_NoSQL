@@ -7,6 +7,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(__dirname + "/styles"));
+app.use(express.static(__dirname + "/images"));
 
 app.set("views", path.join(__dirname, "./views"));
 app.set("view engine", "ejs");
