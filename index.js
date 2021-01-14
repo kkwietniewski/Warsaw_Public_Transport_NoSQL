@@ -25,13 +25,61 @@ app.get("/records", async (req, res) => {
   try {
     const results = await db.matchNode("n").return("n").run();
     records = results.map((row) => row.n);
+
   } catch (e) {
     res.status(500);
     res.send("Blad!");
   } finally {
+   
     res.render("records.html", { records: records });
     await session.close();
   }
+});
+
+app.get("/line/:type/:name", async (req, res) =>
+{
+  const session = driver.session();
+  let line;
+  let stops=[];
+  let name = req.params.name;
+  let type = req.params.type;
+
+  if (type == "Metro")
+  {
+    type = "MetroStation";
+  }
+  else if (type == "Bus")
+  {
+    type = "BusStation"; 
+  }
+  else if (type == "Tram")
+  {
+    type = "TramStation";
+  }
+  else if (type == "Train")
+  {
+    type = "TrainStation";
+  }
+
+  const query = `match (n:${type})-[]-(m:Line {name:'${name}'}) return n`;
+
+  console.log(query); 
+
+  session
+    .run(query)
+    .then((result) => {
+      const results = result.records.map((record) => record.get(0));
+      console.log(results); 
+
+      res.render("line.html", {results: results});
+    })
+    .catch((e) => {
+      res.status(500).send(e);
+    })
+    .then(() => {
+      return session.close();
+    });
+
 });
 
 app.get("/record/:name", async (req, res) => {
