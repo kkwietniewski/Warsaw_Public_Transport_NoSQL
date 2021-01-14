@@ -16,7 +16,7 @@ let db = new cypher.Connection("bolt://localhost", {
 runServer(3000);
 
 app.get("/", (req, res) => {
-  res.render("index.html", {title: "Homepage", message: "Choose endpoint"});
+  res.render("index.html", { title: "Homepage", message: "Choose endpoint" });
 });
 
 app.get("/records", async (req, res) => {
@@ -29,7 +29,7 @@ app.get("/records", async (req, res) => {
     res.status(500);
     res.send("Blad!");
   } finally {
-    res.render("records.html", {records: records});
+    res.render("records.html", { records: records });
     await session.close();
   }
 });
@@ -41,7 +41,7 @@ app.get("/record/:name", async (req, res, next) => {
   try {
     const results = await db
       .matchNode("node")
-      .where({"node.name": name})
+      .where({ "node.name": name })
       .return("node")
       .run();
     record = results.map((row) => row.node);
@@ -53,7 +53,7 @@ app.get("/record/:name", async (req, res, next) => {
     await session.close();
   }
 });
-app.get("/create", (req, res)=>{
+app.get("/create", (req, res) => {
   res.render("createnode.html");
 });
 app.post("/create", async (req, res) => {
@@ -64,11 +64,11 @@ app.post("/create", async (req, res) => {
     .create(cypher.node("node", formType, { name: formName }))
     .return("node")
     .run();
-  records = results.map((row) => row.node)
-  res.render("addresults.html", {records: records, message: "You created: "});
+  records = results.map((row) => row.node);
+  res.render("addresults.html", { records: records, message: "You created: " });
 });
 
-app.get("/delete", (req, res)=>{
+app.get("/delete", (req, res) => {
   res.render("deletenode.html");
 });
 
@@ -80,23 +80,27 @@ app.post("/delete", async (req, res) => {
     .return("node")
     .run();
   records = results.map((row) => row.node);
-  res.render("deleteresults.html", {records: records, message: "You deleted: ", name: formName});
+  res.render("deleteresults.html", {
+    records: records,
+    message: "You deleted: ",
+    name: formName,
+  });
 });
 
-app.get("/flushdata", (req,res)=>{
+app.get("/flushdata", (req, res) => {
   res.render("flushdatabase.html");
 });
 
 app.post("/flushdata", async (req, res) => {
   const results = await db.matchNode("n").detachDelete("n").run();
-  res.render("flushdatabaseresult.html", {message: "Database flushed!"})
+  res.render("flushdatabaseresult.html", { message: "Database flushed!" });
 });
 
-app.get("/numberofrelations", (req,res)=>{
-  res.render("numberofrelations.html");
+app.get("/relationdepth", (req, res) => {
+  res.render("relationdepth.html");
 });
 
-app.post("/numberofrelations", async (req, res) => {
+app.post("/relationdepth", async (req, res) => {
   const session = driver.session();
   let formName = req.body.name;
   let formNumber = req.body.number;
@@ -107,8 +111,10 @@ app.post("/numberofrelations", async (req, res) => {
     .then((result) => {
       const results = result.records.map((record) => record.get(0));
 
-      console.log(results);
-      res.render("numberofrelationsresult.html", {result: results, length: formNumber});
+      res.render("relationdepthresult.html", {
+        result: results,
+        length: formNumber,
+      });
     })
     .catch((e) => {
       res.status(500).send(e);
@@ -118,9 +124,9 @@ app.post("/numberofrelations", async (req, res) => {
     });
 });
 
-app.get("/findrelation", (req, res)=> {
-  res.render("findrelation.html"); 
-})
+app.get("/findrelation", (req, res) => {
+  res.render("findrelation.html");
+});
 
 app.post("/findrelation", async (req, res) => {
   const session = driver.session();
@@ -133,7 +139,7 @@ app.post("/findrelation", async (req, res) => {
     .then((result) => {
       const results = result.records.map((record) => record.get(0));
 
-      res.send(results);
+      res.render("findrelationresult.html", { result: results });
     })
     .catch((e) => {
       res.status(500).send(e);
@@ -142,7 +148,6 @@ app.post("/findrelation", async (req, res) => {
       return session.close();
     });
 });
-
 
 // app.get("/createdatabase", async(req, res) => {
 
