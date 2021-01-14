@@ -76,7 +76,7 @@ app.post("/delete", async (req, res) => {
   let formName = req.body.name;
   const results = await db
     .matchNode("node", { name: formName })
-    .delete("node")
+    .detachDelete("node")
     .return("node")
     .run();
   records = results.map((row) => row.node)
