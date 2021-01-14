@@ -64,30 +64,13 @@
     </nav>
 
     <div class="container">
-      <table class="table table-hover table-bordered table-light m-4">
-        <thead>
-          <tr>
-            <th scope="col"></th>
-            <th scope="col">Identity</th>
-            <th scope="col">Name</th>
-            <th scope="col">Labels</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% records.forEach((record, index) => {%>
-          <tr>
-            <th scope="row"><%= index %></th>
-            <td><%= record.identity%></td>
-            <td>
-              <a href="/record/<%= record.properties.name%>"
-                ><%= record.properties.name%></a
-              >
-            </td>
-            <td><%= record.labels%></td>
-            <% }); %>
-          </tr>
-        </tbody>
-      </table>
+      <% records.forEach((record, index) => {%>
+        <% if (record.labels == "Line") { %>
+          <div>
+            <%= record.properties.name %>
+          </div>
+          <% } %>
+      <% }); %>
     </div>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
