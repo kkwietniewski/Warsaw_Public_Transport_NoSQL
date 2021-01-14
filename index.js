@@ -16,7 +16,7 @@ let db = new cypher.Connection("bolt://localhost", {
 runServer(3000);
 
 app.get("/", (req, res) => {
-  res.render("index.html", { title: "Homepage", message: "Choose endpoint" });
+  res.render("index.html", { title: "Homepage", message: "Wybierz endpoint" });
 });
 
 app.get("/records", async (req, res) => {
@@ -34,9 +34,7 @@ app.get("/records", async (req, res) => {
   }
 });
 
-
-
-app.get("/record/:name", async (req, res, next) => {
+app.get("/record/:name", async (req, res) => {
   const session = driver.session();
   let record;
   let name = req.params.name;
@@ -51,7 +49,7 @@ app.get("/record/:name", async (req, res, next) => {
     res.status(500);
     res.send("Błąd!");
   } finally {
-    res.render("record.html", {record :record});
+    res.render("record.html", { record: record });
     await session.close();
   }
 });
@@ -67,7 +65,7 @@ app.post("/create", async (req, res) => {
     .return("node")
     .run();
   records = results.map((row) => row.node);
-  res.render("addresults.html", { records: records, message: "You created: " });
+  res.render("addresults.html", { records: records, message: "Utworzyłeś : " });
 });
 
 app.get("/delete", (req, res) => {
@@ -95,7 +93,9 @@ app.get("/flushdata", (req, res) => {
 
 app.post("/flushdata", async (req, res) => {
   const results = await db.matchNode("n").detachDelete("n").run();
-  res.render("flushdatabaseresult.html", { message: "Database flushed!" });
+  res.render("flushdatabaseresult.html", {
+    message: "Baza danych została wyczyszczona!",
+  });
 });
 
 app.get("/relationdepth", (req, res) => {
@@ -178,21 +178,3 @@ app.post("/findrelation", async (req, res) => {
 // 	res.send('Database created');
 // 	});
 // });
-
-// try {
-//     const result = await session.run("MATCH (n) return n");
-
-//     const nodes = result.records;
-
-//     nodes.forEach((record) => {
-//       records.push(record.get(0));
-//     });
-
-//     records.forEach((result) => {
-//       console.log(result.properties.name);
-//     });
-//   } finally {
-//     await session.close();
-//   }
-//   res.send(records);
-//   await driver.close();
