@@ -132,7 +132,7 @@ app.post("/findrelation", async (req, res) => {
   const session = driver.session();
   let formName1 = req.body.name1;
   let formName2 = req.body.name2;
-  const query = `match (from {name:"${formName1}"}), (to {name: "${formName2}"}) call apoc.algo.dijkstra(from, to, '', '') yield path as path return path`;
+  const query = `match (from {name:"${formName1}"}), (to {name: "${formName2}"}) call apoc.algo.dijkstra(from, to, 'connect|part_of', '') yield path as path return path`;
 
   session
     .run(query)
