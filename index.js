@@ -118,6 +118,10 @@ app.post("/numberofrelations", async (req, res) => {
     });
 });
 
+app.get("/findrelation", (req, res)=> {
+  res.render("findrelation.html"); 
+})
+
 app.post("/findrelation", async (req, res) => {
   const session = driver.session();
   let formName1 = req.body.name1;
