@@ -108,7 +108,7 @@ app.post("/numberofrelations", async (req, res) => {
       const results = result.records.map((record) => record.get(0));
 
       console.log(results);
-      res.render("numberofrelationsresult.html", {result: results});
+      res.render("numberofrelationsresult.html", {result: results, length: formNumber});
     })
     .catch((e) => {
       res.status(500).send(e);
