@@ -79,8 +79,7 @@ app.post("/delete", async (req, res) => {
     .detachDelete("node")
     .return("node")
     .run();
-  records = results.map((row) => row.node)
-  console.log(records);
+  records = results.map((row) => row.node);
   res.render("deleteresults.html", {records: records, message: "You deleted: ", name: formName});
 });
 

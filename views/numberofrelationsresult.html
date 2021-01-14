@@ -3,20 +3,35 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
+      crossorigin="anonymous"
+    />
     <title>Number of relations</title>
   </head>
   <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container-fluid">
         <a class="navbar-brand" href="/">Homepage</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link" aria-current="page" href="/records">Records</a>
+              <a class="nav-link" aria-current="page" href="/records"
+                >Records</a
+              >
             </li>
             <li class="nav-item">
               <a class="nav-link" aria-current="page" href="#">Record</a>
@@ -28,10 +43,14 @@
               <a class="nav-link" aria-current="page" href="/delete">Delete</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" aria-current="page" href="/flushdata">Flushdata</a>
+              <a class="nav-link" aria-current="page" href="/flushdata"
+                >Flushdata</a
+              >
             </li>
             <li class="nav-item">
-              <a class="nav-link" aria-current="page" href="/numberofrelations">Number of relations</a>
+              <a class="nav-link" aria-current="page" href="/numberofrelations"
+                >Number of relations</a
+              >
             </li>
             <li class="nav-item">
               <a class="nav-link" aria-current="page" href="#">Find relation</a>
@@ -43,36 +62,52 @@
     <div class="container-fluid">
       <table class="table">
         <thead>
-        <tr>
-          <th scope="col"></th>
-          <th scope="col">Węzeł początkowy</th>
-          <th scope="col">Węzeł końcowy</th>
-          <th scope="col">Relacja</th>
-          <th scope="col">Długość relacji</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% result.forEach((record, index) => {%>
+          <tr>
+            <th scope="col"></th>
+            <th scope="col">Węzeł początkowy</th>
+            <th scope="col">Węzeł końcowy</th>
+            <th scope="col">Relacja</th>
+            <th scope="col">Długość relacji</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% result.forEach((record, index) => {%>
           <tr>
             <th scope="row"><%= index %></th>
             <td><%= record.start.properties.name %></td>
             <td><%= record.end.properties.name %></td>
             <td>
-            <% record.segments.forEach((segment, index) => {%>
+              <% record.segments.forEach((segment, index) => {%>
               <h4><%= index+1 %></h4>
-                <p><strong>Węzeł początkowy:</strong> <%= segment.relationship.start %></p>
-                <p><strong>Typ relacji:</strong> <%= segment.relationship.type %></p>
-                <p><strong>Czas przejazdu:</strong> <%= segment.relationship.properties.time %>min</p>
-                <p><strong>Numer przystanku:</strong> <%= segment.relationship.properties.stop_id %></p>
-                <p><strong>Czy przystanek początkowy/końcowy:</strong> <%= segment.relationship.properties.ultimate_stop%></p>
-                <p><strong>Węzeł końcowy:</strong> <%= segment.relationship.end %></p>
-              
+              <p>
+                <strong>Węzeł początkowy:</strong> <%=
+                segment.relationship.start %>
+              </p>
+              <p>
+                <strong>Typ relacji:</strong> <%= segment.relationship.type %>
+              </p>
+              <p>
+                <strong>Czas przejazdu:</strong> <%=
+                segment.relationship.properties.time %>min
+              </p>
+              <p>
+                <strong>Numer przystanku:</strong> <%=
+                segment.relationship.properties.stop_id %>
+              </p>
+              <p>
+                <strong>Czy przystanek początkowy/końcowy:</strong> <%=
+                segment.relationship.properties.ultimate_stop%>
+              </p>
+              <p>
+                <strong>Węzeł końcowy:</strong> <%= segment.relationship.end %>
+              </p>
+
               <% }); %>
             </td>
             <td><%= record.length %></td>
             <% }); %>
-        </tr>
-      </tbody>
+          </tr>
+        </tbody>
       </table>
     </div>
   </body>
