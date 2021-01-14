@@ -34,6 +34,8 @@ app.get("/records", async (req, res) => {
   }
 });
 
+
+
 app.get("/record/:name", async (req, res, next) => {
   const session = driver.session();
   let record;
@@ -49,7 +51,7 @@ app.get("/record/:name", async (req, res, next) => {
     res.status(500);
     res.send("Błąd!");
   } finally {
-    res.send(record);
+    res.render("record.html", {record :record});
     await session.close();
   }
 });

@@ -35,9 +35,6 @@
               >
             </li>
             <li class="nav-item">
-              <a class="nav-link" aria-current="page" href="#">Record</a>
-            </li>
-            <li class="nav-item">
               <a class="nav-link" aria-current="page" href="/create">Create</a>
             </li>
             <li class="nav-item">
@@ -78,7 +75,7 @@
           <tr>
             <th scope="row"><%= index %></th>
             <td><%= record.identity%></td>
-            <td><%= record.properties.name%></td>
+            <td><a href ="/record/<%= record.properties.name%>" ><%= record.properties.name%></a></td>
             <td><%= record.labels%></td>
             <% }); %>
           </tr>

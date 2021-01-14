@@ -36,9 +36,6 @@
               >
             </li>
             <li class="nav-item">
-              <a class="nav-link" aria-current="page" href="#">Record</a>
-            </li>
-            <li class="nav-item">
               <a class="nav-link" aria-current="page" href="/create">Create</a>
             </li>
             <li class="nav-item">
@@ -72,7 +69,6 @@
             <h5 class="card-title md-2"><%= message %></h5>
             <% records.forEach(record => {%>
             <p><span class="lbl">Identity: </span><%= record.identity %></p>
-            <p><span class="lbl">Label: </span><%= record.labels %></p>
             <p><span class="lbl">Name: </span><%= name %></p>
             <% }); %>
           </div>
