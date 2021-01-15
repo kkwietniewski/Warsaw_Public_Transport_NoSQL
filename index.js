@@ -214,6 +214,7 @@ app.post("/relationdepth", async (req, res) => {
     .run(query)
     .then((result) => {
       const results = result.records.map((record) => record.get(0));
+      // console.log(Object.keys(results[0].segments[0].relationship.properties)); 
 
       res.render("relationdepthresult.html", {
         result: results,

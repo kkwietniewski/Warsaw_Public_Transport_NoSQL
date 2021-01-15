@@ -81,31 +81,21 @@
                 <div id="flush-collapse<%= index%>" class="accordion-collapse collapse" aria-labelledby="flush-heading<%= index%>" data-bs-parent="#accordionFlushExample">
                   <div class="accordion-body">
                     <% record.segments.forEach((segment, index) => {%>
+                      <%
+                      let tmpProp=[]; 
+                      let properties=Object.keys(segment.relationship.properties);
+                      properties.forEach(prop => {
+                        tmpProp.push(prop); 
+                      });
+                     %> 
                       <h4><%= index+1 %></h4>
-                      <p>
-                        <strong>Węzeł początkowy:</strong> <%=
-                        segment.relationship.start %>
-                      </p>
-                      <p>
-                        <strong>Typ relacji:</strong> <%= segment.relationship.type %>
-                      </p>
-                      <p>
-                        <strong>Czas przejazdu:</strong> <%=
-                        segment.relationship.properties.time %>min
-                      </p>
-                      <p>
-                        <strong>Numer przystanku:</strong> <%=
-                        segment.relationship.properties.stop_id %>
-                      </p>
-                      <p>
-                        <strong>Czy przystanek początkowy/końcowy:</strong> <%=
-                        segment.relationship.properties.ultimate_stop%>
-                      </p>
-                      <p>
-                        <strong>Węzeł końcowy:</strong> <%= segment.relationship.end %>
-                      </p>
-        
-                      <% }); %>
+                      
+                    <% tmpProp.forEach((prop, index) => { %>
+                     <div>
+                    <%= index %>. <%= prop %> : <%= segment.relationship.properties[prop] %>
+                     </div>
+                      <% }) %>
+                    <% }); %>
                   </div>
                 </div>
               </div>
