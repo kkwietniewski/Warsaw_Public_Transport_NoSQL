@@ -58,6 +58,11 @@
                 >Wyszukaj najkrótszą trasę</a
               >
             </li>
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="/addrelation"
+                >Dodaj relację</a
+              >
+            </li>
           </ul>
         </div>
       </div>
@@ -89,26 +94,30 @@
       <div class = "col-5">
 
         <div class="card my-5 p-4">
-          <div class="card-body d-flex flex-row justify-content-center">
+          <div class="card-body d-flex justify-content-center">
             <h5 class="card-title md-2">Metro</h5>
-            <% metroLine.forEach(line => {%>
-              <p>
-                <a href = "/line/<%= line.properties.type %>/<%= line.properties.name %>"><%= line.properties.name %> </a>
-              </p>
-            <% }); %>
           </div>
+          <div class="d-flex flex-nowrap justify-content-center">
+              <% metroLine.forEach(line => {%>
+                <div class="p-4">
+                  <a href = "/line/<%= line.properties.type %>/<%= line.properties.name %>"><%= line.properties.name %><br> </a>
+                </div>
+              <% }); %>
+            </div>
         </div>
       </div>
       
       <div class = "col-5 offset-2">
         <div class="card my-5 p-4">
-          <div class="card-body d-flex flex-row justify-content-center">
+          <div class="card-body d-flex justify-content-center">
             <h5 class="card-title md-2">Autobus</h5>
-            <% busLine.forEach(line => {%>
-              <p>
-                <a href = "/line/<%= line.properties.type %>/<%= line.properties.name %>"><%= line.properties.name %> </a>
-              </p>
-            <% }); %>
+          </div>
+          <div class="d-flex flex-nowrap justify-content-center">
+              <% busLine.forEach(line => {%>
+                <div class="p-4">
+                  <a href = "/line/<%= line.properties.type %>/<%= line.properties.name %>"><%= line.properties.name %><br> </a>
+                </div>
+              <% }); %>
           </div>
         </div>
       </div>
@@ -118,26 +127,30 @@
       <div class = "col-5">
 
         <div class="card my-5 p-4">
-          <div class="card-body d-flex flex-row justify-content-center">
+          <div class="card-body d-flex justify-content-center">
             <h5 class="card-title md-2">Tramwaj</h5>
-            <% tramLine.forEach(line => {%>
-              <p>
-                <a href = "/line/<%= line.properties.type %>/<%= line.properties.name %>"><%= line.properties.name %> </a> 
-              </p>
-            <% }); %>
+          </div>
+          <div class="d-flex flex-nowrap justify-content-center">
+              <% tramLine.forEach(line => {%>
+                <div class="p-4">
+                  <a href = "/line/<%= line.properties.type %>/<%= line.properties.name %>"><%= line.properties.name %><br> </a>
+                </div>
+              <% }); %>
           </div>
         </div>
       </div>
       
       <div class = "col-5 offset-2">
         <div class="card my-5 p-4">
-          <div class="card-body d-flex flex-row justify-content-center">
+          <div class="card-body d-flex justify-content-center">
             <h5 class="card-title md-2">Kolej</h5>
-            <% trainLine.forEach(line => {%>
-              <p>
-                <a href = "/line/<%= line.properties.type %>/<%= line.properties.name %>"><%= line.properties.name %> </a>
-              </p>
-            <% }); %>
+          </div>
+          <div class="d-flex flex-nowrap justify-content-center">
+              <% trainLine.forEach(line=> {%>
+                <div class="p-4">
+                  <a href = "/line/<%= line.properties.type %>/<%= line.properties.name %>"><%= line.properties.name %><br> </a>
+                </div>
+              <% }); %>
           </div>
         </div>
       </div> 

@@ -39,39 +39,51 @@ app.get("/records", async (req, res) => {
 app.get("/line/:type/:name", async (req, res) =>
 {
   const session = driver.session();
-  let line;
-  let stops=[];
+  let lineStops=[];
+  let ultimateStops=[];
+  let lineType;
   let name = req.params.name;
   let type = req.params.type;
-
+  
   if (type == "Metro")
   {
     type = "MetroStation";
+    lineType = "Linia Metro"; 
   }
   else if (type == "Bus")
   {
     type = "BusStation"; 
+    lineType = "Linia Autobusowa"; 
   }
   else if (type == "Tram")
   {
     type = "TramStation";
+    lineType = "Linia Tramwajowa"; 
   }
   else if (type == "Train")
   {
     type = "TrainStation";
+    lineType = "Linia Kolejowa"; 
   }
 
-  const query = `match (n:${type})-[]-(m:Line {name:'${name}'}) return n`;
-
-  console.log(query); 
+  const query = `match p = (n:${type})-[r]-(m:Line {name:'${name}'}) return p order by r.stop_id `;
 
   session
     .run(query)
     .then((result) => {
       const results = result.records.map((record) => record.get(0));
-      console.log(results); 
+      console.log(results[0].segments[0]); 
+      
+      results.forEach(res => {
+        lineStops.push(res.segments[0]);
 
-      res.render("line.html", {results: results, line:name});
+        if (res.segments[0].relationship.properties.ultimate_stop == "true")
+        {
+          ultimateStops.push(res.start.properties.name); 
+        }
+      })
+     
+      res.render("line.html", {results: lineStops, line:name, ultimateStops: ultimateStops, lineType: lineType});
     })
     .catch((e) => {
       res.status(500).send(e);
@@ -144,6 +156,48 @@ app.post("/flushdata", async (req, res) => {
   res.render("flushdatabaseresult.html", {
     message: "Baza danych została wyczyszczona!",
   });
+});
+
+app.get("/addrelation", async (req, res) => {
+  const session = driver.session();
+  let nodes;
+  try {
+    const results = await db
+      .matchNode("node")
+      .return("node")
+      .run();
+    nodes = results.map((row) => row.node);
+  } catch (e) {
+    res.status(500);
+    res.send("Błąd!");
+  } finally {
+    res.render("addrelation.html", { nodes: nodes});
+    await session.close();
+  }
+});
+
+app.post("/addrelation", async (req,res)=>{
+  const session = driver.session();
+  let formNode1 = req.body.node1;
+  let formNode2 = req.body.node2;
+  let formRelationType = req.body.relationType;
+  let formRelationName = req.body.relationName;
+  let formRelationPropName = req.body.relationPropName;
+  let formRelationPropValue = req.body.relationPropValue;
+  let query;
+  if(formRelationType == "out" && formRelationPropValue.length < 1) query = `match (n1 {name:"${formNode1}"}), (n2 {name:"${formNode2}"}) create (n1)-[:${formRelationName}]->(n2)`;
+  else if(formRelationType == "out" && formRelationPropValue.length >= 1) query = `match (n1 {name:"${formNode1}"}), (n2 {name:"${formNode2}"}) create (n1)-[:${formRelationName}{${formRelationPropName}:"${formRelationPropValue}"}]->(n2)`;
+  else if(formRelationType == "in" && formRelationPropValue.length < 1)query = `match (n1 {name:"${formNode1}"}), (n2 {name:"${formNode2}"}) create (n1)<-[:${formRelationName}]-(n2)`;
+  else if(formRelationType == "in" && formRelationPropValue.length >= 1) query = `match (n1 {name:"${formNode1}"}), (n2 {name:"${formNode2}"}) create (n1)<-[:${formRelationName}{${formRelationPropName}:"${formRelationPropValue}"}]-(n2)`;
+  session
+    .run(query)
+    .catch((e) => {
+      res.status(500).send(e);
+    })
+    .then(() => {
+      res.render("addrelationresult.html", {node1: formNode1, node2: formNode2, relationName: formRelationName, });
+      return session.close();
+    });
 });
 
 app.get("/relationdepth", (req, res) => {

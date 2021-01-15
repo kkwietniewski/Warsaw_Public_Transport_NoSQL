@@ -10,7 +10,8 @@
       crossorigin="anonymous"
     />
     <link rel="icon" type="image/svg+xml" href="../neo4j.svg" />
-    <title>Usuń węzeł</title>
+    <link rel="stylesheet" href="../style.css" />
+    <title>Wyniki dodawania relacji</title>
   </head>
   <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -68,34 +69,19 @@
       </div>
     </nav>
 
-    <form action="/delete" method="POST">
-      <div class="container-fluid">
-        <div class="row d-flex justify-content-center">
-          <div class="col-4">
-            <div class="card mt-5 p-4">
-              <div
-                class="card-body d-flex flex-row justify-content-center"
-              ></div>
-              <h5 class="card-title md-2">Co chcesz usunąć?</h5>
-              <div class="input-group my-3">
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="Name"
-                  name="name"
-                />
-              </div>
-              <button
-                class="btn btn-outline-secondary btn-block mt-4 md-4"
-                type="submit"
-              >
-                Usuń
-              </button>
-            </div>
+    <div class="container-fluid">
+      <div class="row d-flex justify-content-center">
+        <div class="col-4">
+          <div class="card mt-5 p-4">
+            <div class="card-body d-flex flex-row justify-content-center"></div>
+            <h5 class="card-title md-2">Stworzono relację: <%= relationName %></h5>
+            <p><span class="lbl"><%= node1 %> - <%= node2 %></span></p>
+            <p><span class="lbl">O nazwie: </span><%= relationName %></p>
           </div>
         </div>
       </div>
-    </form>
+    </div>
+
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"

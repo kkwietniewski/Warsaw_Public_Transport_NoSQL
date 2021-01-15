@@ -348,5 +348,3 @@ CREATE (a)-[r:manage]->(b) return a,b;
 
 //Zmiana relacji między węzłami łączącymi linie
 match (n)-[r:part_of]->(b:Line) WITH  n,b,r, labels(n) as lbl, count(labels(n)) as ile where lbl[1] is not null merge (n)-[:connect{stop_id: r.stop_id, time:r.time, ultimate_stop: r.ultimate_stop, request_stop: r.request_stop }]->(b) delete r return n,b;
-
-
