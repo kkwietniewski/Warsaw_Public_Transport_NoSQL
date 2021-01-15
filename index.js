@@ -117,15 +117,28 @@ app.get("/create", (req, res) => {
   res.render("createnode.html");
 });
 app.post("/create", async (req, res) => {
-  let formType = req.body.type;
+  let formLine = req.body.type;
   let formName = req.body.name;
   let records = [];
-  const results = await db
-    .create(cypher.node("node", formType, { name: formName }))
+
+  if (formLine == 'Metro' || formLine == 'Bus' || formLine == 'Tram' || formLine == 'Train')
+  {
+    let formType = 'Line';
+    const results = await db
+    .create(cypher.node("node", formType, { name: formName, type: formLine }))
     .return("node")
     .run();
   records = results.map((row) => row.node);
   res.render("addresults.html", { records: records, message: "Utworzyłeś : " });
+  }
+  else {
+  const results = await db
+    .create(cypher.node("node", formLine, { name: formName }))
+    .return("node")
+    .run();
+  records = results.map((row) => row.node);
+  res.render("addresults.html", { records: records, message: "Utworzyłeś : " });
+  }
 });
 
 app.get("/delete", (req, res) => {
