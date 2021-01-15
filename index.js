@@ -71,7 +71,7 @@ app.get("/line/:type/:name", async (req, res) =>
       const results = result.records.map((record) => record.get(0));
       console.log(results); 
 
-      res.render("line.html", {results: results});
+      res.render("line.html", {results: results, line:name});
     })
     .catch((e) => {
       res.status(500).send(e);
