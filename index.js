@@ -195,13 +195,27 @@ app.post("/addrelation", async (req,res)=>{
   let formNode2 = req.body.node2;
   let formRelationType = req.body.relationType;
   let formRelationName = req.body.relationName;
-  let formRelationPropName = req.body.relationPropName;
-  let formRelationPropValue = req.body.relationPropValue;
+  let formRelationPropName1 = req.body.relationPropName1;
+  let formRelationPropValue1 = req.body.relationPropValue1;
+  let formRelationPropName2 = req.body.relationPropName2;
+  let formRelationPropValue2 = req.body.relationPropValue2;
+  let formRelationPropName3 = req.body.relationPropName3;
+  let formRelationPropValue3 = req.body.relationPropValue3;
   let query;
-  if(formRelationType == "out" && formRelationPropValue.length < 1) query = `match (n1 {name:"${formNode1}"}), (n2 {name:"${formNode2}"}) create (n1)-[:${formRelationName}]->(n2)`;
-  else if(formRelationType == "out" && formRelationPropValue.length >= 1) query = `match (n1 {name:"${formNode1}"}), (n2 {name:"${formNode2}"}) create (n1)-[:${formRelationName}{${formRelationPropName}:"${formRelationPropValue}"}]->(n2)`;
-  else if(formRelationType == "in" && formRelationPropValue.length < 1)query = `match (n1 {name:"${formNode1}"}), (n2 {name:"${formNode2}"}) create (n1)<-[:${formRelationName}]-(n2)`;
-  else if(formRelationType == "in" && formRelationPropValue.length >= 1) query = `match (n1 {name:"${formNode1}"}), (n2 {name:"${formNode2}"}) create (n1)<-[:${formRelationName}{${formRelationPropName}:"${formRelationPropValue}"}]-(n2)`;
+  if(formRelationType == "out" && formRelationPropValue1.length < 1 && formRelationPropValue2.length < 1 && formRelationPropValue3.length < 1) query = `match (n1 {name:"${formNode1}"}), (n2 {name:"${formNode2}"}) create (n1)-[:${formRelationName}]->(n2)`;
+  else if(formRelationType == "out" && formRelationPropValue1.length >= 1 && formRelationPropValue2.length < 1 && formRelationPropValue3.length < 1) query = `match (n1 {name:"${formNode1}"}), (n2 {name:"${formNode2}"}) create (n1)-[:${formRelationName}{${formRelationPropName1}:"${formRelationPropValue1}"}]->(n2)`;
+  else if(formRelationType == "out" && formRelationPropValue1.length >= 1 && formRelationPropValue2.length >= 1 && formRelationPropValue3.length < 1) query = `match (n1 {name:"${formNode1}"}), (n2 {name:"${formNode2}"}) create (n1)-[:${formRelationName}{${formRelationPropName1}:"${formRelationPropValue1}",${formRelationPropName2}:"${formRelationPropValue2}"}]->(n2)`;
+  else if(formRelationType == "out" && formRelationPropValue1.length >= 1 && formRelationPropValue2.length >= 1 && formRelationPropValue3.length >= 1) query = `match (n1 {name:"${formNode1}"}), (n2 {name:"${formNode2}"}) create (n1)-[:${formRelationName}{${formRelationPropName1}:"${formRelationPropValue1}",${formRelationPropName2}:"${formRelationPropValue2}",${formRelationPropName3}:"${formRelationPropValue3}"}]->(n2)`;
+  else if(formRelationType == "out" && formRelationPropValue1.length < 1 && formRelationPropValue2.length >= 1 && formRelationPropValue3.length >= 1) query = `match (n1 {name:"${formNode1}"}), (n2 {name:"${formNode2}"}) create (n1)-[:${formRelationName}{${formRelationPropName2}:"${formRelationPropValue2}",${formRelationPropName3}:"${formRelationPropValue3}"}]->(n2)`;
+  else if(formRelationType == "out" && formRelationPropValue1.length < 1 && formRelationPropValue2.length < 1 && formRelationPropValue3.length >= 1) query = `match (n1 {name:"${formNode1}"}), (n2 {name:"${formNode2}"}) create (n1)-[:${formRelationName}{${formRelationPropName3}:"${formRelationPropValue3}"}]->(n2)`;
+  else if(formRelationType == "out" && formRelationPropValue1.length < 1 && formRelationPropValue2.length >= 1 && formRelationPropValue3.length < 1) query = `match (n1 {name:"${formNode1}"}), (n2 {name:"${formNode2}"}) create (n1)-[:${formRelationName}{${formRelationPropName2}:"${formRelationPropValue2}"}]->(n2)`;
+  else if(formRelationType == "in" && formRelationPropValue1.length < 1 && formRelationPropValue2.length < 1 && formRelationPropValue3.length < 1) query = `match (n1 {name:"${formNode1}"}), (n2 {name:"${formNode2}"}) create (n1)<-[:${formRelationName}]-(n2)`;
+  else if(formRelationType == "in" && formRelationPropValue1.length >= 1 && formRelationPropValue2.length < 1 && formRelationPropValue3.length < 1) query = `match (n1 {name:"${formNode1}"}), (n2 {name:"${formNode2}"}) create (n1)<-[:${formRelationName}{${formRelationPropName1}:"${formRelationPropValue1}"}]-(n2)`;
+  else if(formRelationType == "in" && formRelationPropValue1.length >= 1 && formRelationPropValue2.length >= 1 && formRelationPropValue3.length < 1) query = `match (n1 {name:"${formNode1}"}), (n2 {name:"${formNode2}"}) create (n1)<-[:${formRelationName}{${formRelationPropName1}:"${formRelationPropValue1}",${formRelationPropName2}:"${formRelationPropValue2}"}]-(n2)`;
+  else if(formRelationType == "in" && formRelationPropValue1.length >= 1 && formRelationPropValue2.length >= 1 && formRelationPropValue3.length >= 1) query = `match (n1 {name:"${formNode1}"}), (n2 {name:"${formNode2}"}) create (n1)<-[:${formRelationName}{${formRelationPropName1}:"${formRelationPropValue1}",${formRelationPropName2}:"${formRelationPropValue2}",${formRelationPropName3}:"${formRelationPropValue3}"}]-(n2)`;
+  else if(formRelationType == "in" && formRelationPropValue1.length < 1 && formRelationPropValue2.length >= 1 && formRelationPropValue3.length >= 1) query = `match (n1 {name:"${formNode1}"}), (n2 {name:"${formNode2}"}) create (n1)<-[:${formRelationName}{${formRelationPropName2}:"${formRelationPropValue2}",${formRelationPropName3}:"${formRelationPropValue3}"}]-(n2)`;
+  else if(formRelationType == "in" && formRelationPropValue1.length < 1 && formRelationPropValue2.length < 1 && formRelationPropValue3.length >= 1) query = `match (n1 {name:"${formNode1}"}), (n2 {name:"${formNode2}"}) create (n1)<-[:${formRelationName}{${formRelationPropName3}:"${formRelationPropValue3}"}]-(n2)`;
+  else if(formRelationType == "in" && formRelationPropValue1.length < 1 && formRelationPropValue2.length >= 1 && formRelationPropValue3.length < 1) query = `match (n1 {name:"${formNode1}"}), (n2 {name:"${formNode2}"}) create (n1)<-[:${formRelationName}{${formRelationPropName2}:"${formRelationPropValue2}"}]-(n2)`;
   session
     .run(query)
     .catch((e) => {
