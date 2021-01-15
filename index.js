@@ -16,7 +16,7 @@ let db = new cypher.Connection("bolt://localhost", {
 runServer(3000);
 
 app.get("/", (req, res) => {
-  res.render("index.html", { title: "Homepage", message: "Wybierz endpoint" });
+  res.render("index.html", { title: "Homepage", message: "Wybierz endpoint", flushed:"empty"});
 });
 
 app.get("/records", async (req, res) => {
@@ -31,7 +31,7 @@ app.get("/records", async (req, res) => {
     res.send("Blad!");
   } finally {
    
-    res.render("records.html", { records: records });
+    res.render("records.html", { records: records, message:"empty" });
     await session.close();
   }
 });
@@ -114,45 +114,71 @@ app.get("/record/:name", async (req, res) => {
   }
 });
 app.get("/create", (req, res) => {
-  res.render("createnode.html");
+  res.render("createnode.html", {alert:"empty"});
 });
 app.post("/create", async (req, res) => {
   let formLine = req.body.type;
   let formName = req.body.name;
+  let formPropValue = req.body.relationPropValue;
   let records = [];
 
-  if (formLine == 'Metro' || formLine == 'Bus' || formLine == 'Tram' || formLine == 'Train')
+  if (!formPropValue || !formName || !formLine)
+  {
+    res.render("createnode.html", {alert: "Proszę uzupełnić wszystkie dane!"}); 
+  }
+
+  formPropValue = Number(formPropValue);
+  if (Number.isInteger(formPropValue) != true)
+  {
+    res.render("createnode.html", {alert: "Proszę podać poprawne dane!"}); 
+  }
+
+    if (formLine == 'Metro' || formLine == 'Bus' || formLine == 'Tram' || formLine == 'Train')
   {
     let formType = 'Line';
+    
     const results = await db
-    .create(cypher.node("node", formType, { name: formName, type: formLine }))
-    .return("node")
-    .run();
-  records = results.map((row) => row.node);
-  res.render("addresults.html", { records: records, message: "Utworzyłeś : " });
+      .create(cypher.node("node", formType, { name: formName, type: formLine, zone: formPropValue }))
+      .return("node")
+      .run();
+    records = results.map((row) => row.node);
+    res.render("addresults.html", { records: records, message: "Utworzyłeś : " });
+
+   
   }
   else {
   const results = await db
-    .create(cypher.node("node", formLine, { name: formName }))
+    .create(cypher.node("node", formLine, { name: formName, zone: formPropValue  }))
     .return("node")
     .run();
   records = results.map((row) => row.node);
   res.render("addresults.html", { records: records, message: "Utworzyłeś : " });
   }
+  
+
+  
 });
 
 app.get("/delete", (req, res) => {
-  res.render("deletenode.html");
+  res.render("deletenode.html", {alert:"empty"});
 });
 
 app.post("/delete", async (req, res) => {
   let formName = req.body.name;
+  if (!formName)
+  {
+    res.render("deletenode.html", {alert: "Proszę uzupełnić wszystkie dane!"})
+  }
   const results = await db
     .matchNode("node", { name: formName })
     .detachDelete("node")
     .return("node")
     .run();
   records = results.map((row) => row.node);
+  if (records.length == 0)
+      {
+       res.render("deletenode.html", {alert: "Taki rekord nie istnieje!"}); 
+      }
   res.render("deleteresults.html", {
     records: records,
     message: "You deleted: ",
@@ -166,8 +192,8 @@ app.get("/flushdata", (req, res) => {
 
 app.post("/flushdata", async (req, res) => {
   const results = await db.matchNode("n").detachDelete("n").run();
-  res.render("flushdatabaseresult.html", {
-    message: "Baza danych została wyczyszczona!",
+  res.render("index.html", {
+    flushed: "Baza danych została wyczyszczona!", message: "Dodaj elementy do bazy danych!"
   });
 });
 
@@ -216,6 +242,8 @@ app.post("/addrelation", async (req,res)=>{
   else if(formRelationType == "in" && formRelationPropValue1.length < 1 && formRelationPropValue2.length >= 1 && formRelationPropValue3.length >= 1) query = `match (n1 {name:"${formNode1}"}), (n2 {name:"${formNode2}"}) create (n1)<-[:${formRelationName}{${formRelationPropName2}:"${formRelationPropValue2}",${formRelationPropName3}:"${formRelationPropValue3}"}]-(n2)`;
   else if(formRelationType == "in" && formRelationPropValue1.length < 1 && formRelationPropValue2.length < 1 && formRelationPropValue3.length >= 1) query = `match (n1 {name:"${formNode1}"}), (n2 {name:"${formNode2}"}) create (n1)<-[:${formRelationName}{${formRelationPropName3}:"${formRelationPropValue3}"}]-(n2)`;
   else if(formRelationType == "in" && formRelationPropValue1.length < 1 && formRelationPropValue2.length >= 1 && formRelationPropValue3.length < 1) query = `match (n1 {name:"${formNode1}"}), (n2 {name:"${formNode2}"}) create (n1)<-[:${formRelationName}{${formRelationPropName2}:"${formRelationPropValue2}"}]-(n2)`;
+  
+  
   session
     .run(query)
     .catch((e) => {
@@ -228,7 +256,7 @@ app.post("/addrelation", async (req,res)=>{
 });
 
 app.get("/relationdepth", (req, res) => {
-  res.render("relationdepth.html");
+  res.render("relationdepth.html", {alert: "empty"});
 });
 
 app.post("/relationdepth", async (req, res) => {
@@ -237,19 +265,33 @@ app.post("/relationdepth", async (req, res) => {
   let formNumber = req.body.number;
   const query = `match p = (n {name:"${formName}"})-[r*${formNumber}]-(m) return p`;
 
+  if (!formName || !formNumber)
+  {
+    res.render("relationdepth.html", {alert:"Proszę uzupełnić wszystkie dane!"}); 
+  }
+
+  formNumber = Number(formNumber); 
+ 
+  if (Number.isInteger(formNumber)!=true)
+  {
+    res.render("relationdepth.html", {alert:"Wprowadź poprawne dane!"}); 
+  }
   session
     .run(query)
     .then((result) => {
       const results = result.records.map((record) => record.get(0));
-      // console.log(Object.keys(results[0].segments[0].relationship.properties)); 
-
+      
+      if (results.length == 0)
+      {
+       res.render("relationdepth.html", {alert: "Taki rekord nie istnieje!"}); 
+      }
       res.render("relationdepthresult.html", {
         result: results,
         length: formNumber,
       });
     })
     .catch((e) => {
-      res.status(500).send(e);
+      res.render("relationdepth.html", {alert: "Błąd serwera!"}); 
     })
     .then(() => {
       return session.close();
@@ -257,19 +299,29 @@ app.post("/relationdepth", async (req, res) => {
 });
 
 app.get("/findrelation", (req, res) => {
-  res.render("findrelation.html");
+  res.render("findrelation.html", {alert: "empty"});
 });
 
 app.post("/findrelation", async (req, res) => {
   const session = driver.session();
   let formName1 = req.body.name1;
   let formName2 = req.body.name2;
+
+  if (!formName1 || !formName2)
+  {
+    res.render("findrelation.html", {alert: "Proszę uzupełnić wszystkie dane!"}); 
+  }
+
   const query = `match (from {name:"${formName1}"}), (to {name: "${formName2}"}) call apoc.algo.dijkstra(from, to, 'connect|part_of', '') yield path as path return path`;
 
   session
     .run(query)
     .then((result) => {
       const results = result.records.map((record) => record.get(0));
+      if (results.length == 0)
+      {
+       res.render("findrelation.html", {alert: "Nie można odnaleźć takiej trasy!"}); 
+      }
 
       res.render("findrelationresult.html", { result: results });
     })

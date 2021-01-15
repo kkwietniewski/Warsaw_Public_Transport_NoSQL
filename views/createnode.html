@@ -67,6 +67,18 @@
         </div>
       </div>
     </nav>
+    
+    <% if (alert != "empty") { %>
+      <div class = "container-fluid mt-2">
+        <div class="row">
+          <div class="col-4 offset-4">
+            <div class="alert alert-danger text-center" role="alert">
+              <%= alert %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <%} %>
 
     <form action="/create" method="POST">
       <div class="container-fluid">
@@ -96,9 +108,13 @@
                 <input
                   type="text"
                   class="form-control"
-                  placeholder="Name"
+                  placeholder="Nazwa węzła"
                   name="name"
                 />
+              </div>
+              <div class="input-group my-3">
+                <span class="input-group-text" id="basic-addon3">zone</span>
+                <input type="text" class="form-control" name="relationPropValue" placeholder= "Numer strefy" >
               </div>
               <button
                 class="btn btn-outline-secondary btn-block mt-4 md-4"

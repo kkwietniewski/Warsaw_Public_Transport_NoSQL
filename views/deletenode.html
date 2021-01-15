@@ -67,6 +67,17 @@
         </div>
       </div>
     </nav>
+    <% if (alert != "empty") { %>
+      <div class = "container-fluid mt-2">
+        <div class="row">
+          <div class="col-4 offset-4">
+            <div class="alert alert-danger text-center" role="alert">
+              <%= alert %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <%} %>
 
     <form action="/delete" method="POST">
       <div class="container-fluid">
@@ -81,7 +92,7 @@
                 <input
                   type="text"
                   class="form-control"
-                  placeholder="Name"
+                  placeholder="Nazwa węzła"
                   name="name"
                 />
               </div>
