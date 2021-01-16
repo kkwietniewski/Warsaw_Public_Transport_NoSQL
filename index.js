@@ -137,16 +137,22 @@ app.post("/create", async (req, res) => {
   {
     let formType = 'Line';
     
+    try {
     const results = await db
       .create(cypher.node("node", formType, { name: formName, type: formLine, zone: formPropValue }))
       .return("node")
       .run();
     records = results.map((row) => row.node);
     res.render("addresults.html", { records: records, message: "Utworzyłeś : " });
-
+    }
+    catch (e)
+    {
+      res.render("createnode.html", {alert:"Błąd serwera! Być może taki rekord już istnieje."}); 
+    }
    
   }
   else {
+    try {
   const results = await db
     .create(cypher.node("node", formLine, { name: formName, zone: formPropValue  }))
     .return("node")
@@ -154,8 +160,11 @@ app.post("/create", async (req, res) => {
   records = results.map((row) => row.node);
   res.render("addresults.html", { records: records, message: "Utworzyłeś : " });
   }
-  
-
+catch (e)
+{
+  res.render("createnode.html", {alert: "Błąd serwera! Być może taki rekord już istnieje."});
+}
+  }
   
 });
 

@@ -1,0 +1,6 @@
+DROP constraint unique_line IF EXISTS;
+DROP constraint unique_company IF EXISTS;
+DROP constraint unique_bus IF EXISTS;
+DROP constraint unique_train IF EXISTS;
+DROP constraint unique_tram IF EXISTS;
+DROP constraint unique_metro IF EXISTS;

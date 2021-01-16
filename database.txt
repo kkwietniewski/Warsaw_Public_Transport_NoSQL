@@ -348,3 +348,12 @@ CREATE (a)-[r:manage]->(b) return a,b;
 
 //Zmiana relacji między węzłami łączącymi linie
 match (n)-[r:part_of]->(b:Line) WITH  n,b,r, labels(n) as lbl, count(labels(n)) as ile where lbl[1] is not null merge (n)-[:connect{stop_id: r.stop_id, time:r.time, ultimate_stop: r.ultimate_stop, request_stop: r.request_stop }]->(b) delete r return n,b;
+
+//UNIQUE CONSTRAINTS
+CREATE CONSTRAINT unique_line ON (n:Line) ASSERT n.name IS UNIQUE;
+CREATE CONSTRAINT unique_metro ON (n:MetroStation) ASSERT n.name IS UNIQUE; 
+CREATE CONSTRAINT unique_tram ON (n:TramStation) ASSERT n.name IS UNIQUE; 
+CREATE CONSTRAINT unique_bus ON (n:BusStation) ASSERT n.name IS UNIQUE;
+CREATE CONSTRAINT unique_train ON (n:TrainStation) ASSERT n.name IS UNIQUE; 
+CREATE CONSTRAINT unique_company ON (n:Company) ASSERT n.name IS UNIQUE; 
+
