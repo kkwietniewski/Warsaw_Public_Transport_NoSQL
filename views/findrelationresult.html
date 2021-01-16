@@ -69,7 +69,7 @@
     </nav>
     
     <div class="container">
-      <h2>Wyszukana relacja: </h2>
+      <h2>Wyszukana relacja: <%= node1 %> - <%= node2 %></h2>
       <table class="table">
         <thead>
           <tr>
@@ -88,12 +88,12 @@
                     <% record.segments.forEach((segment, index) => {%>
                       <tr>
                         <th scope="row"><%= index+1 %></th>
-                        <td> <%=segment.relationship.start %> </td>
+                        <td> <%=segment.start.properties.name %> </td>
                         <td><%= segment.relationship.type %> </td>
                         <td><%= segment.relationship.properties.time %>min </td>
                         <td><%= segment.relationship.properties.stop_id %> </td>
                         <td><%= segment.relationship.properties.ultimate_stop%> </td>
-                        <td><%= segment.relationship.end %></td>
+                        <td><%= segment.end.properties.name %></td>
                       </tr>
                       <% }); %>
         </tbody>

@@ -323,7 +323,7 @@ app.post("/findrelation", async (req, res) => {
        res.render("findrelation.html", {alert: "Nie można odnaleźć takiej trasy!"}); 
       }
 
-      res.render("findrelationresult.html", { result: results });
+      res.render("findrelationresult.html", { result: results, node1: formName1, node2: formName2 });
     })
     .catch((e) => {
       res.status(500).send(e);
