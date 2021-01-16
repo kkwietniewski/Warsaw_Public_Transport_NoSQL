@@ -219,7 +219,7 @@ app.get("/addrelation", async (req, res) => {
     res.status(500);
     res.send("Błąd!");
   } finally {
-    res.render("addrelation.html", { nodes: nodes});
+    res.render("addrelation.html", { nodes: nodes, alert:"empty"});
     await session.close();
   }
 });
@@ -252,7 +252,25 @@ app.post("/addrelation", async (req,res)=>{
   else if(formRelationType == "in" && formRelationPropValue1.length < 1 && formRelationPropValue2.length < 1 && formRelationPropValue3.length >= 1) query = `match (n1 {name:"${formNode1}"}), (n2 {name:"${formNode2}"}) create (n1)<-[:${formRelationName}{${formRelationPropName3}:"${formRelationPropValue3}"}]-(n2)`;
   else if(formRelationType == "in" && formRelationPropValue1.length < 1 && formRelationPropValue2.length >= 1 && formRelationPropValue3.length < 1) query = `match (n1 {name:"${formNode1}"}), (n2 {name:"${formNode2}"}) create (n1)<-[:${formRelationName}{${formRelationPropName2}:"${formRelationPropValue2}"}]-(n2)`;
   
-  
+  if (!formNode1 || !formNode2 || !formRelationType || !formRelationName)
+  {
+    const session = driver.session();
+  let nodes;
+  try {
+    const results = await db
+      .matchNode("node")
+      .return("node")
+      .run();
+    nodes = results.map((row) => row.node);
+  } catch (e) {
+    res.status(500);
+    res.send("Błąd!");
+  } finally {
+    res.render("addrelation.html", { nodes: nodes, alert:"Proszę podać typ relacji!"});
+    await session.close();
+  }
+  }
+
   session
     .run(query)
     .catch((e) => {

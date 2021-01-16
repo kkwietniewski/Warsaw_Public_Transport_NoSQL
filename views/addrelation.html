@@ -67,6 +67,17 @@
         </div>
       </div>
     </nav>
+     <% if (alert != "empty") { %>
+      <div class = "container-fluid mt-2">
+        <div class="row">
+          <div class="col-4 offset-4">
+            <div class="alert alert-danger text-center" role="alert">
+              <%= alert %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <%} %>
     <% 
     let lines = [];
     let metroStations = [];
@@ -130,7 +141,6 @@
                   class="form-control"
                   placeholder="Nazwa relacji"
                   name="relationName"
-                  value= "is_related_to"
                 />
               </div>
               <h5 class="card-text text-center">Typ relacji</h5>
