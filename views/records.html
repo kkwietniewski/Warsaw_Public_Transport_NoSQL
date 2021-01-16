@@ -101,7 +101,7 @@
           <div class="d-flex flex-nowrap justify-content-center">
               <% metroLine.forEach(line => {%>
                 <div class="p-4">
-                  <a href = "/line/<%= line.properties.type %>/<%= line.properties.name %>"><%= line.properties.name %><br> </a>
+                  <a class="link" href = "/line/<%= line.properties.type %>/<%= line.properties.name %>"><%= line.properties.name %><br> </a>
                 </div>
               <% }); %>
             </div>
@@ -116,7 +116,7 @@
           <div class="d-flex flex-nowrap justify-content-center">
               <% busLine.forEach(line => {%>
                 <div class="p-4">
-                  <a href = "/line/<%= line.properties.type %>/<%= line.properties.name %>"><%= line.properties.name %><br> </a>
+                  <a class="link" href = "/line/<%= line.properties.type %>/<%= line.properties.name %>"><%= line.properties.name %><br> </a>
                 </div>
               <% }); %>
           </div>
@@ -134,7 +134,7 @@
           <div class="d-flex flex-nowrap justify-content-center">
               <% tramLine.forEach(line => {%>
                 <div class="p-4">
-                  <a href = "/line/<%= line.properties.type %>/<%= line.properties.name %>"><%= line.properties.name %><br> </a>
+                  <a class="link" href = "/line/<%= line.properties.type %>/<%= line.properties.name %>"><%= line.properties.name %><br> </a>
                 </div>
               <% }); %>
           </div>
@@ -149,7 +149,7 @@
           <div class="d-flex flex-nowrap justify-content-center">
               <% trainLine.forEach(line=> {%>
                 <div class="p-4">
-                  <a href = "/line/<%= line.properties.type %>/<%= line.properties.name %>"><%= line.properties.name %><br> </a>
+                  <a class="link" href = "/line/<%= line.properties.type %>/<%= line.properties.name %>"><%= line.properties.name %><br> </a>
                 </div>
               <% }); %>
           </div>

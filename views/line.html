@@ -10,12 +10,12 @@
       integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../../style.css">
 </head>
 <body>
   <nav class="navbar navbar-expand-lg navbar-custom">
     <div class="container-fluid">
-      <a class="navbar-brand" href="/"><img src = "../tram.svg" ></a>
+      <a class="navbar-brand" href="/"><img src = "../../tram.svg" ></a>
       <button
         class="navbar-toggler"
         type="button"
@@ -90,7 +90,7 @@
                       <% results.forEach(record => {%>
                       <tr>
                         <th scope="row"><%= record.relationship.properties.stop_id %></th>
-                        <td><a href = "/record/<%= record.start.properties.name %>"><%= record.start.properties.name %></a></td>
+                        <td><a class="link" href = "/record/<%= record.start.properties.name %>"><%= record.start.properties.name %></a></td>
                         <td><%= record.relationship.properties.time %></td>
                         <td><%= record.start.properties.zone %></td>
                       </tr>

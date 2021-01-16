@@ -16,6 +16,14 @@ body {
     display: block;
 
 }
+.link{
+    color:#4C748C;
+    font-weight: 700;
+    text-decoration: none;
+}
+.link:hover{
+    color:#083048;
+}
 
 .nav-link:hover {
     color: #6EA8CC;
@@ -37,4 +45,10 @@ input[type="text"] {
 
 .form-select {
     background-color: #ffffffe0;
+}
+
+.container-custom{
+    background-color: #ffffffe0;
+    box-shadow: 10px 15px 15px rgba(28, 42, 51, 0.6);
+    border-radius: 10px;
 }
