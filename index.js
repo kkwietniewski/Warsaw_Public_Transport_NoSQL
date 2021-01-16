@@ -266,7 +266,7 @@ app.post("/addrelation", async (req,res)=>{
     res.status(500);
     res.send("Błąd!");
   } finally {
-    res.render("addrelation.html", { nodes: nodes, alert:"Proszę podać typ relacji!"});
+    res.render("addrelation.html", { nodes: nodes, alert:"Proszę podać nazwę relacji!"});
     await session.close();
   }
   }
