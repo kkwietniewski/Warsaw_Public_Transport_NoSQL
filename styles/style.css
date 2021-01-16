@@ -1,3 +1,40 @@
+body {
+    background-color: #4C748C;
+}
+
 .lbl {
     font-weight: bold;
+}
+
+.navbar-custom {
+    background: #223540;
+    box-shadow: 0px 15px 15px rgba(28, 42, 51, 0.6);
+}
+
+.nav-link {
+    color: white;
+    display: block;
+
+}
+
+.nav-link:hover {
+    color: #6EA8CC;
+}
+
+.card {
+    background-color: #ffffffe0;
+    box-shadow: 10px 15px 15px rgba(28, 42, 51, 0.6);
+    border-radius: 10px;
+}
+
+.btn-outline-secondary:hover {
+    background-color: #223540;
+}
+
+input[type="text"] {
+    background-color: #ffffffe0;
+}
+
+.form-select {
+    background-color: #ffffffe0;
 }

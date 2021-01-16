@@ -16,7 +16,7 @@ let db = new cypher.Connection("bolt://localhost", {
 runServer(3000);
 
 app.get("/", (req, res) => {
-  res.render("index.html", { title: "Homepage", message: "Wybierz endpoint", flushed:"empty"});
+  res.render("index.html", { title: "Homepage", message: "Czy chcesz dodać węzeł?", flushed:"empty"});
 });
 
 app.get("/records", async (req, res) => {
