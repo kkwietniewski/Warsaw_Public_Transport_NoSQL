@@ -190,7 +190,7 @@ app.post("/delete", async (req, res) => {
       }
   res.render("deleteresults.html", {
     records: records,
-    message: "You deleted: ",
+    message: "Usunąłeś: ",
     name: formName,
   });
 });
@@ -359,31 +359,3 @@ app.post("/findrelation", async (req, res) => {
       return session.close();
     });
 });
-
-// app.get("/createdatabase", async(req, res) => {
-
-// 	let queries=[];
-// 	let tmp="";
-// 	let queryNo = 0;
-// 	let text;
-// 	fs.readFile('./database.txt', async (err,data) => {
-// 		if (err) throw err;
-// 		text = data.toString();
-// 		text = text.split(";");
-
-// 		text.forEach(function(query) {
-// 			queries.push(session.run(query))
-// 		})
-
-// 		console.log(queries);
-// 		// Promise.all(queries).then(function(results) {
-// 		// 	results.forEach(function (result) {
-// 		// 		console.log(result)
-// 		// 	})
-// 		// 	session.close()
-// 		// 	driver.close()
-// 		// })
-
-// 	res.send('Database created');
-// 	});
-// });
